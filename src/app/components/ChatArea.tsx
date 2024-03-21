@@ -8,7 +8,7 @@ type Props = {
 
 export const ChatArea = ({ chat }: Props) => {
     return (
-        <section className="flex-auto h-0 overflow">
+        <section className="flex-auto h-0 overflow-y-scroll">
             {!chat && <ChatPlaceholder />}
             {chat && chat.messages.map(item => (
                 <ChatMessageItem

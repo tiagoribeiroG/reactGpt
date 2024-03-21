@@ -11,6 +11,7 @@ export const ChatMessageItem = ({ item }: Props) => {
     return (
         <div className={`py-5 ${item.author === 'ai' && 'bg-gray-600/50'}`}>
             <div className="max-w-4xl m-auto flex">
+                
                 <div className={`w-10 h-10 flex justify-center items-center mx-4 md:ml-0 rounded
                 ${item.author === 'ai' ? 'bg-green-900' : 'bg-blue-900'}`}>
                     {item.author === 'me' && <IconBxUserCircle width={24} height={24} />}

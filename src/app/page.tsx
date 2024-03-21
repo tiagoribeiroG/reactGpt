@@ -17,15 +17,17 @@ const Page = () => {
 
   const [sidebarOpened, setSidebarOpened] = useState(false);
   const [chatList, setChatList] = useState<Chat[]>([]);
+
   const [chatActiveId, setChatActiveId] = useState<string>('');
   const [chatActive, setChatActive] = useState<Chat>();
+  const [AILoading, setAILoading] = useState(false);
   
 
   useEffect(() => {
     setChatActive(chatList.find(item => item.id === chatActiveId));
   }, [chatActiveId, chatList]); 
 
-  const [AILoading, setAILoading] = useState(false)
+  
 
   const openSidebar = () => setSidebarOpened(true);
   const closeSidebar = () => setSidebarOpened(false);
@@ -48,9 +50,10 @@ const Page = () => {
     
   }
 
-  const hadleSendMessage = (message: string) => {  
+  
+
+  const handleSendMessage = (message: string) => {  
     if(!chatActiveId) {
-      // creating new chat minuto 2:25
       let newChatId = uuidv4();
       setChatList([{
         id: newChatId,
@@ -63,15 +66,20 @@ const Page = () => {
       setChatActiveId(newChatId); 
 
     } else {
-      // updating existing chat
+     
       let chatListClone = [...chatList,];
       let chatIndex = chatListClone.findIndex(item => item.id === chatActiveId);
       chatListClone[chatIndex].messages.push({
         id: uuidv4(), 
         author: 'me', 
         body: message
-      })
+      });
+      setChatList(chatListClone);
+
        }
+
+       setAILoading(true);
+
 
 
   }
@@ -99,8 +107,8 @@ return (
       
       <ChatArea chat={chatActive} />
 
-      <Footer 
-      // onSendMessage={handleSendMessage}
+      <Footer
+      onSendMessage={handleSendMessage}
       disabled={AILoading}
       />
 

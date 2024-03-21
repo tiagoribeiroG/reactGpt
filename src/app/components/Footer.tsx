@@ -1,14 +1,15 @@
 // import { ChatMessageInput } from "./ChatMessageInput";
 import { ReactNode } from 'react';
+import { ChatMessageInput } from './ChatMessageInput';
 
 type Props = {
     disabled: boolean
     onSendMessage: (message: string) => void;
 }
 
-const ChatMessageInput = ({ disabled, onSend }: Props): ReactNode => {
-    // Lógica do componente...
-}
+// const ChatMessageInput = ({ disabled, onSendMessage }: Props): ReactNode => {
+  
+// }
 
 export const Footer = ({ disabled, onSendMessage }: Props) => {
     return (
@@ -16,7 +17,7 @@ export const Footer = ({ disabled, onSendMessage }: Props) => {
             <div className="max-w-4xl m-auto">
                 <ChatMessageInput
                 disabled={disabled}
-                onSendMessage={onSendMessage}
+                onSend={onSendMessage}
                 />
                 <div className="pt-3 text-center text-xs text-gray-300">
                     by Tiago. <br/>
@@ -30,3 +31,5 @@ export const Footer = ({ disabled, onSendMessage }: Props) => {
         </footer>
     )
 }
+
+export default Footer
