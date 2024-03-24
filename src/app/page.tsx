@@ -10,6 +10,7 @@ import {v4 as uuidv4 } from 'uuid';
 
 import { Sidebar } from "./components/Sidebar";
 import { useEffect, useState } from "react";
+import { SidebarChatButton } from "./components/SidebarChatButton";
 
 
 const Page = () => {
@@ -27,10 +28,31 @@ const Page = () => {
     setChatActive(chatList.find(item => item.id === chatActiveId));
   }, [chatActiveId, chatList]); 
 
+  useEffect(()  => {
+    if(AILoading) getAIResponse();
+
+  }, [AILoading])
+
   
 
   const openSidebar = () => setSidebarOpened(true);
   const closeSidebar = () => setSidebarOpened(false);
+
+  const getAIResponse = () => {
+    setTimeout(() => {
+      let chatListClone = [...chatList];
+      let chatIndex = chatListClone.findIndex(item => item.id === chatActiveId);
+      if(chatIndex >= -1) {
+        chatListClone[chatIndex].messages.push({
+          id: uuidv4(),// 2:44
+          author: 'ai',
+          body: 'Aqui vai a resposta AI'
+        });
+      }
+      setChatList(chatListClone);
+      setAILoading(false);
+    }, 2000);
+  }
 
  
 
@@ -80,12 +102,22 @@ const Page = () => {
 
        setAILoading(true);
 
+  }
 
+  const handleSeleteChat = () => {
 
   }
 
+  const handleDeleteChat = () => {
+    
+  }
 
-return (
+  const handleEditChat = () => {
+    
+  }
+
+
+ return (
   <main className="flex min-h-screen bg-gpt-gray">
     <Sidebar
       open={sidebarOpened}
@@ -93,6 +125,16 @@ return (
       onClear={handleClearConversations}
       onNewChat={handleNewChat}
     >
+      {chatList.map(item => (
+        <SidebarChatButton 
+        key={item.id}
+        chatItem={item}
+        active={item.id === chatActiveId}
+        onClick={handleSeleteChat}
+        onDelete={handleDeleteChat}
+        onEdit={handleEditChat}
+        />
+      ))}
       <div>...</div>
       
     </Sidebar>
@@ -100,12 +142,12 @@ return (
       <button onClick={() => setSidebarOpened(true)}>Abrir sidebar</button>
 
       <Header openSidebarClick={openSidebar}
-      title={``}
+      title={chatActive ? chatActive.title : 'nova conversa'}
       newChatClick={handleNewChat}
 
       />
       
-      <ChatArea chat={chatActive} />
+      <ChatArea chat={chatActive}  loading={AILoading}/>
 
       <Footer
       onSendMessage={handleSendMessage}
