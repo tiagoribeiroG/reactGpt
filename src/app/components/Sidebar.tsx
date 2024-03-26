@@ -26,7 +26,7 @@ export const Sidebar = ({
     >
       <div
         className={`transition-all duration-200 flex h-screen
-         ${open ? "ml-0" : "-ml-96"} md>ml-0`}
+         ${open ? "ml-0" : "-ml-96"} md:ml-0`}
       >
         <div className="flex flex-col w-64 p-2 bg-gray-900">
           <div onClick={onNewChat}

@@ -3,6 +3,8 @@ import { useState } from "react";
 import IconChatLeft from "./icons/IconChatLeft";
 import IconTrash from "./icons/inconTrash";
 import IconBxsEditAlt from "./icons/IconEdit";
+import IconClose from "./icons/iconClose";
+import IconCheck from "./icons/IconCheck";
 
 type Props = {
     chatItem: Chat;
@@ -14,11 +16,29 @@ type Props = {
 
 export const SidebarChatButton = ({ chatItem, active, onClick, onDelete, onEdit }: Props) => {
     const [deleting, setDeleting] = useState(false);
-    const [editing, setediting] = useState(false);
+    const [editing, setEditing] = useState(false);
     const [titleInput, setTitleInput] = useState(chatItem.title);
 
+    const handleClickButton = () => {
+        if(!deleting || !editing) {
+            onClick(chatItem.id);
+        }
+
+    }
+
+    const handleConfirmButton = () => {
+
+    }
+
+    const handleCancelButton = () => {
+        setDeleting(false);
+        setEditing(false);
+
+    }
+
+
     return (
-        <div className={`flex items-center rounded-md p-3 text-sm cursor-pointer
+        <div onClick={handleClickButton} className={`flex items-center rounded-md p-3 text-sm cursor-pointer
          hover:bg-gray-500/10 ${active ? 'bg-gray500/20' : 'bg-transparent'} `}>
            
            <div className="mr-3">
@@ -48,23 +68,44 @@ export const SidebarChatButton = ({ chatItem, active, onClick, onDelete, onEdit 
            </div>
             {active && !deleting && !editing && 
                 <div className="flex">
-                    <div onClick={() => setediting(true)} className="cursor-pointer mx-1 
+                    <div onClick={() => setEditing(true)} className="cursor-pointer mx-1 
                     opacity-60 hover:opacity-100">
                         <IconBxsEditAlt width={16} height={16} />
                     </div>
 
                     <div onClick={() => setDeleting(true)} className="cursor-pointer mx-1 
                     opacity-60 hover:opacity-100">
-                        <IconBxsEditAlt width={16} height={16} />
+                        <IconTrash width={16} height={16} />
                     </div>
 
-{/* 3:06 */}
+
 
                 </div>
             }
 
+            {(deleting || editing) && 
+
+            <div className="flex">
+                    <div onClick={handleConfirmButton} className="cursor-pointer mx-1 
+                    opacity-60 hover:opacity-100">
+                        <IconCheck width={16} height={16} />
+                    </div>
+
+                    <div onClick={handleCancelButton} className="cursor-pointer mx-1 
+                    opacity-60 hover:opacity-100">
+                        <IconClose width={16} height={16} />
+                    </div>
+
+
+
+                </div>
+
+                    }
+
+                    {/* 3:13 */}
 
         </div>
+        
     )
 
 }
