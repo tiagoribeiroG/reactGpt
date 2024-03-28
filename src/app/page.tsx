@@ -104,11 +104,25 @@ const Page = () => {
 
   }
 
-  const handleSeleteChat = () => {
+  const handleSeleteChat = (id: string) => {
+    if(AILoading) return;
+
+    let item = chatList.find(item => item.id === id);
+    if(item) setChatActiveId(item.id);
+    closeSidebar();
+
+
 
   }
 
-  const handleDeleteChat = () => {
+  const handleDeleteChat = (id: string) => {
+    let chatListClone = [...chatList];
+    let chatIndex = chatListClone.findIndex(item => item.id === id);
+    chatListClone.splice(chatIndex, 1);
+    setChatList(chatListClone);
+    setChatActiveId('');
+
+    // 3:19min
     
   }
 
