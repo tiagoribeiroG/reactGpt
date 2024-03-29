@@ -91,7 +91,7 @@ const Page = () => {
      
       let chatListClone = [...chatList,];
       let chatIndex = chatListClone.findIndex(item => item.id === chatActiveId);
-      chatListClone[chatIndex].messages.push({
+       chatListClone[chatIndex].messages.push({
         id: uuidv4(), 
         author: 'me', 
         body: message
@@ -122,11 +122,18 @@ const Page = () => {
     setChatList(chatListClone);
     setChatActiveId('');
 
-    // 3:19min
+   
     
   }
 
-  const handleEditChat = () => {
+  const handleEditChat = (id: string, newTitle: string) => {
+    if(newTitle) {
+      let chatListClone = [...chatList];
+    let chatIndex = chatListClone.findIndex(item => item.id === id);
+    // chatListClone[chatIndex].title= newTitle;
+    setChatList(chatListClone);
+
+    }
     
   }
 
